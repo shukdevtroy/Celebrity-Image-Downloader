@@ -8,7 +8,7 @@ The Celebrity Image Downloader is a Python application that allows users to down
 - Select multiple celebrities to download images.
 - Specify the number of images to download per celebrity.
 - Automatically creates directories for storing downloaded images.
-- Links to each celebrity’s Wikipedia page.
+- Links to each celebrity’s Wikipedia page 
 
 ## Requirements
 To run this application, you need:

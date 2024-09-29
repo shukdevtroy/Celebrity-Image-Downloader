@@ -1,5 +1,3 @@
-pip install beautifulsoup4
-
 import os
 import requests
 import webbrowser

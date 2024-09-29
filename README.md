@@ -44,7 +44,7 @@ pip install requests beautifulsoup4
    streamlit run app.py
    ```
 
-## User Guide
+## User Guide for the downloader
 
 ### How to Use the Application
 

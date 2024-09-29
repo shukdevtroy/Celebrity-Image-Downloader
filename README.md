@@ -28,14 +28,14 @@ pip install requests beautifulsoup4
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/celebrity-image-downloader.git
-   cd celebrity-image-downloader
+   git clone https://github.com/shukdevtroy/Celebrity-Image-Downloader.git
+   cd Celebrity-Image-Downloader
    ```
 
 2. Run the application:
 
    ```bash
-   python app.py
+   python download.py
    ```
 
 ## User Guide

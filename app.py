@@ -114,8 +114,7 @@ celebrities = {
 }
 
 
-def download_images(celebrity_name, num_images):
-    output_dir = os.path.join(os.getcwd(), "Celebrity_Images", celebrity_name.replace(" ", "_"))
+def download_images(celebrity_name, num_images, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
     search_url = f"https://www.google.com/search?hl=en&tbm=isch&q={celebrity_name.replace(' ', '+')}"
@@ -157,17 +156,18 @@ def main():
     selected_celebrities = st.multiselect("Select Celebrity Names:", list(celebrities.keys()))
 
     num_images = st.number_input("Number of Images to Download:", min_value=1, value=5)
+    output_dir = st.text_input("Enter the directory to save images:", os.path.join(os.getcwd(), "Celebrity_Images"))
 
     if st.button("Download Images"):
         if selected_celebrities:
             total_downloaded = 0
             for celebrity in selected_celebrities:
-                downloaded = download_images(celebrity, num_images)
+                downloaded = download_images(celebrity, num_images, output_dir)
                 total_downloaded += downloaded
             if total_downloaded > 0:
                 st.success("Download has been finished! 🎉")
                 st.balloons()  # Celebratory effect
-                st.info(f"Please check the directory:\n{os.path.join(os.getcwd(), 'Celebrity_Images')}")
+                st.info(f"Please check the directory:\n{output_dir}")
             else:
                 st.warning("No images were downloaded.")
         else:

@@ -32,10 +32,16 @@ pip install requests beautifulsoup4
    cd Celebrity-Image-Downloader
    ```
 
-2. Run the application:
+2. Run the downloader:
 
    ```bash
    python download.py
+   ```
+
+3. Run the streamlit app:
+
+   ```bash
+   streamlit run app.py
    ```
 
 ## User Guide

@@ -113,8 +113,10 @@ celebrities = {
     "Zoe Saldana": "https://en.wikipedia.org/wiki/Zoe_Saldana",
 }
 
-def download_images(celebrity_name, num_images, output_dir):
-    os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
+
+def download_images(celebrity_name, num_images):
+    output_dir = os.path.join(os.getcwd(), "Celebrity_Images", celebrity_name.replace(" ", "_"))
+    os.makedirs(output_dir, exist_ok=True)
 
     search_url = f"https://www.google.com/search?hl=en&tbm=isch&q={celebrity_name.replace(' ', '+')}"
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -155,22 +157,17 @@ def main():
     selected_celebrities = st.multiselect("Select Celebrity Names:", list(celebrities.keys()))
 
     num_images = st.number_input("Number of Images to Download:", min_value=1, value=5)
-    output_directory = st.text_input("Output Directory:", value=r"F:\ulala")  # Default to a specified path
 
     if st.button("Download Images"):
         if selected_celebrities:
-            if not os.path.exists(output_directory):
-                os.makedirs(output_directory)  # Create the directory if it doesn't exist
-                st.success(f"Directory created: {output_directory}")
-            
             total_downloaded = 0
             for celebrity in selected_celebrities:
-                downloaded = download_images(celebrity, num_images, output_directory)
+                downloaded = download_images(celebrity, num_images)
                 total_downloaded += downloaded
             if total_downloaded > 0:
                 st.success("Download has been finished! 🎉")
                 st.balloons()  # Celebratory effect
-                st.info(f"Please check the directory:\n{output_directory}")
+                st.info(f"Please check the directory:\n{os.path.join(os.getcwd(), 'Celebrity_Images')}")
             else:
                 st.warning("No images were downloaded.")
         else:

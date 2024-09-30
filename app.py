@@ -120,6 +120,10 @@ def download_images(celebrity_name, num_images, output_dir):
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(search_url, headers=headers)
 
+    if response.status_code != 200:
+        st.error(f"Failed to retrieve images for {celebrity_name}. Status code: {response.status_code}")
+        return 0
+
     soup = BeautifulSoup(response.text, 'html.parser')
     image_elements = soup.find_all('img', limit=num_images + 1)[1:]
 
@@ -132,6 +136,7 @@ def download_images(celebrity_name, num_images, output_dir):
     for index, img in enumerate(image_elements):
         img_url = img.get('src')
         if not img_url or not img_url.startswith('http'):
+            st.warning(f"Skipping invalid image URL: {img_url}")
             continue
 
         try:

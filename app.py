@@ -113,7 +113,6 @@ celebrities = {
     "Zoe Saldana": "https://en.wikipedia.org/wiki/Zoe_Saldana",
 }
 
-
 def download_images(celebrity_name, num_images):
     output_dir = os.path.join(os.getcwd(), "Celebrity_Images", celebrity_name.replace(" ", "_"))
     os.makedirs(output_dir, exist_ok=True)
@@ -155,7 +154,6 @@ def main():
     st.subheader("Select a celebrity and download images")
 
     selected_celebrities = st.multiselect("Select Celebrity Names:", list(celebrities.keys()))
-
     num_images = st.number_input("Number of Images to Download:", min_value=1, value=5)
 
     if st.button("Download Images"):

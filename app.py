@@ -140,7 +140,7 @@ def download_images(celebrity_name, num_images, output_dir):
             with open(img_name, 'wb') as img_file:
                 img_file.write(img_data)
             downloaded += 1
-            progress_bar.progress((downloaded / total_images))  # Update progress bar
+            progress_bar.progress(downloaded / total_images)  # Update progress bar
             if downloaded >= num_images:
                 break
         except Exception as e:

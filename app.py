@@ -114,7 +114,7 @@ celebrities = {
 }
 
 def download_images(celebrity_name, num_images, output_dir):
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
 
     search_url = f"https://www.google.com/search?hl=en&tbm=isch&q={celebrity_name.replace(' ', '+')}"
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -155,10 +155,14 @@ def main():
     selected_celebrities = st.multiselect("Select Celebrity Names:", list(celebrities.keys()))
 
     num_images = st.number_input("Number of Images to Download:", min_value=1, value=5)
-    output_directory = st.text_input("Output Directory:", value=os.getcwd())  # Default to current directory
+    output_directory = st.text_input("Output Directory:", value=r"F:\ulala")  # Default to a specified path
 
     if st.button("Download Images"):
         if selected_celebrities:
+            if not os.path.exists(output_directory):
+                os.makedirs(output_directory)  # Create the directory if it doesn't exist
+                st.success(f"Directory created: {output_directory}")
+            
             total_downloaded = 0
             for celebrity in selected_celebrities:
                 downloaded = download_images(celebrity, num_images, output_directory)

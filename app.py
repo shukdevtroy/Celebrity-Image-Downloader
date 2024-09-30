@@ -172,9 +172,10 @@ def main():
             st.warning("No celebrities selected.")
 
     # Wikipedia links
-    for celebrity in selected_celebrities:
-        if st.button(f"Open Wikipedia for {celebrity}"):
-            webbrowser.open(celebrities[celebrity])
+    if selected_celebrities:
+        st.subheader("Open Wikipedia Pages:")
+        for celebrity in selected_celebrities:
+            st.markdown(f"[{celebrity}]({celebrities[celebrity]})")
 
 if __name__ == "__main__":
     main()

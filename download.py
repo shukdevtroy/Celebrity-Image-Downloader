@@ -119,30 +119,38 @@ def download_images(celebrity_names, num_images):
         output_dir = os.path.join(os.getcwd(), "Celebrity_Images", celebrity_name.replace(" ", "_"))
         os.makedirs(output_dir, exist_ok=True)
 
-        search_url = f"https://www.google.com/search?hl=en&tbm=isch&q={celebrity_name.replace(' ', '+')}"
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(search_url, headers=headers)
-
-        soup = BeautifulSoup(response.text, 'html.parser')
-        image_elements = soup.find_all('img', limit=num_images + 1)[1:]
-
         downloaded = 0
-        for img in image_elements:
-            img_url = img.get('src')
-            if not img_url or not img_url.startswith('http'):
-                continue
+        start = 0
+        while downloaded < num_images:
+            search_url = f"https://www.google.com/search?hl=en&tbm=isch&q={celebrity_name.replace(' ', '+')}&start={start}"
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            response = requests.get(search_url, headers=headers)
 
-            try:
-                img_data = requests.get(img_url).content
-                img_name = os.path.join(output_dir, f"{celebrity_name.replace(' ', '_')}_{downloaded + 1}.jpg")
-                with open(img_name, 'wb') as img_file:
-                    img_file.write(img_data)
-                downloaded += 1
-                print(f"Downloaded {img_name}")
-                if downloaded >= num_images:
-                    break
-            except Exception as e:
-                print(f"Could not download {img_url}. Error: {e}")
+            soup = BeautifulSoup(response.text, 'html.parser')
+            image_elements = soup.find_all('img', limit=num_images + 1)[1:]
+
+            for img in image_elements:
+                img_url = img.get('src')
+                if not img_url or not img_url.startswith('http'):
+                    continue
+
+                try:
+                    img_data = requests.get(img_url).content
+                    img_name = os.path.join(output_dir, f"{celebrity_name.replace(' ', '_')}_{downloaded + 1}.jpg")
+                    with open(img_name, 'wb') as img_file:
+                        img_file.write(img_data)
+                    downloaded += 1
+                    print(f"Downloaded {img_name}")
+                    if downloaded >= num_images:
+                        break
+                except Exception as e:
+                    print(f"Could not download {img_url}. Error: {e}")
+
+            if downloaded >= num_images:
+                break
+
+            # Increase the start parameter to get the next set of images
+            start += 20  # Adjust based on how many images you want per page
 
         if downloaded == 0:
             print(f"No images found for {celebrity_name}.")
